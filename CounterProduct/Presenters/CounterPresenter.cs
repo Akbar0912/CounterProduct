@@ -4,6 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using CounterProduct.Repository;
+using CounterProduct.Presenters;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.Data.Common;
 
 namespace CounterProduct.Presenter
 {
@@ -16,11 +20,15 @@ namespace CounterProduct.Presenter
         private int _currentRowIndex = 0;
         private int _countdownTime;
         private List<PlanModel> _plans;
+        private readonly IAddData _addrepo;
+        private TCPConnection _connection;
 
         public CounterPresenter(IHomeView view, List<PlanModel> plans)
         {
             _homeView = view;
             _plans = plans;
+            _addrepo = new AddData();
+
             _homeView.SetPlanBindingSource(new BindingSource { DataSource = _plans });
 
             // Initialize the countdown time for the first plan
@@ -32,6 +40,33 @@ namespace CounterProduct.Presenter
             updateTotalPlan();
 
             InitializeTimer();
+
+            InitializeTCPConnectionAsync();
+        }
+
+        public void refreshTCP()
+        {
+            MessageBox.Show("refresh");
+            InitializeTCPConnectionAsync();
+        }
+
+
+        private async Task InitializeTCPConnectionAsync()
+        {
+            _connection = new TCPConnection(GetModelCode, GetSerial); // Passing both update methods
+            await _connection.ConnectToServerAsync();
+        }
+
+        private void GetModelCode(string data)
+        {
+            // Handle the data received for model code
+            string getModelCode = data;
+        }
+
+        private void GetSerial(string data)
+        {
+            // Handle the data received for serial
+            string getSerial = data;
         }
 
         private void updateTotalPlan()
@@ -83,6 +118,7 @@ namespace CounterProduct.Presenter
                     {
                         _countdownTime = (int)_plans[_currentRowIndex].Time.TotalSeconds;
                         _plans[_currentRowIndex].Target++;
+                        var plan = _plans[_currentRowIndex].Target++;
                     }
                 }
 
@@ -91,8 +127,24 @@ namespace CounterProduct.Presenter
                 {
                     _countdownTime = (int)_plans[_currentRowIndex].Time.TotalSeconds;
                 }
-            }
 
+
+                PlanModel model = new PlanModel
+                {
+                    Id = currentPlan.Id,
+                    Date = currentPlan.Date,
+                    Sequence = currentPlan.Sequence,
+                    ModelCode = currentPlan.ModelCode,
+                    Plan = currentPlan.Plan,
+                    Target = currentPlan.Target,
+                    Balancing = currentPlan.Balancing,
+                    Actual = currentPlan.Actual
+                };
+
+                _addrepo.Add(model);
+
+            }
+            
             // Reset bindings to refresh the DataGridView
             var bindingSource = (BindingSource)_homeView.GetPlanBindingSource();
             bindingSource.ResetBindings(false);

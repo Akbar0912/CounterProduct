@@ -1,5 +1,6 @@
 using CounterProduct.Models;
 using CounterProduct.Presenter;
+using CounterProduct.Presenters;
 using CounterProduct.Repository;
 using CounterProduct.View;
 
@@ -13,6 +14,7 @@ namespace CounterProduct
         public Home()
         {
             InitializeComponent();
+            AssociateAndRaiseViewEvents();
 
             IPlanRepository planRepository = new GetData();
             _dataPresenter = new loadData(this, planRepository);
@@ -53,6 +55,16 @@ namespace CounterProduct
         {
             planBindingSource = model;
             dataGridView1.DataSource = model;
+        }
+
+        private void AssociateAndRaiseViewEvents()
+        {
+            btnSetting.Click += delegate
+            {
+                ISettingView settingView = Setting.GetInstance();
+                SettingPresenter settingPresenter = new SettingPresenter(settingView, new SettingModel());
+                (settingView as Form)?.Show();
+            };
         }
 
         private void Form1_Load(object sender, EventArgs e)

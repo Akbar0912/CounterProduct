@@ -30,6 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             tableLayoutPanel1 = new TableLayoutPanel();
+            btnSetting = new Button();
             label1 = new Label();
             Time = new Label();
             labelCounter = new Label();
@@ -49,22 +50,31 @@
             // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.ColumnCount = 1;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 75.33512F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24.6648788F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 48F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 45F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 94F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 111F));
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83.3487854F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6512165F));
+            tableLayoutPanel1.Controls.Add(btnSetting, 1, 0);
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Top;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Margin = new Padding(2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.Size = new Size(778, 59);
             tableLayoutPanel1.TabIndex = 0;
+            // 
+            // btnSetting
+            // 
+            btnSetting.Dock = DockStyle.Fill;
+            btnSetting.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSetting.Location = new Point(653, 5);
+            btnSetting.Margin = new Padding(5, 5, 5, 15);
+            btnSetting.Name = "btnSetting";
+            btnSetting.Size = new Size(120, 39);
+            btnSetting.TabIndex = 3;
+            btnSetting.Text = "Setting";
+            btnSetting.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -243,5 +253,6 @@
         private Label label1;
         private TableLayoutPanel tableLayoutPanel3;
         private DataGridView dataGridView1;
+        private Button btnSetting;
     }
 }

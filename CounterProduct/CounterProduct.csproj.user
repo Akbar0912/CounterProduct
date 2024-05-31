@@ -4,5 +4,8 @@
     <Compile Update="View\Home.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="View\Setting.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
