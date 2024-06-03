@@ -14,7 +14,20 @@ namespace CounterProduct.View
         string Countdown { set; }
         string TotalPlan { set; }
 
+        event EventHandler<CellClickedEventArgs> CellClicked;
+
         void SetPlanBindingSource(BindingSource model);
         BindingSource GetPlanBindingSource();
+
+        public class CellClickedEventArgs : EventArgs
+        {
+            public DataGridViewRow SelectedRow { get; }
+
+            public CellClickedEventArgs(DataGridViewRow selectedRow)
+            {
+                SelectedRow = selectedRow;
+            }
+        }
+
     }
 }

@@ -64,7 +64,7 @@ namespace CounterProduct.View
             {
                 IHomeView homeView = new Home();
                 CounterPresenter counterPresenter = new CounterPresenter(homeView, new List<PlanModel>());
-                counterPresenter.refreshTCP();
+                counterPresenter.RefreshTCP();
                 this.Close();
             };
             

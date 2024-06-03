@@ -3,6 +3,7 @@ using CounterProduct.Presenter;
 using CounterProduct.Presenters;
 using CounterProduct.Repository;
 using CounterProduct.View;
+using static CounterProduct.View.IHomeView;
 
 namespace CounterProduct
 {
@@ -46,6 +47,8 @@ namespace CounterProduct
             set { labelPlan.Text = value; }
         }
 
+        public event EventHandler<CellClickedEventArgs> CellClicked;
+
         public BindingSource GetPlanBindingSource()
         {
             return planBindingSource;
@@ -64,6 +67,12 @@ namespace CounterProduct
                 ISettingView settingView = Setting.GetInstance();
                 SettingPresenter settingPresenter = new SettingPresenter(settingView, new SettingModel());
                 (settingView as Form)?.Show();
+            };
+
+            dataGridView1.CellContentClick += (sender, e) =>
+            {
+                DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
+                CellClicked?.Invoke(this, new CellClickedEventArgs(selectedRow));
             };
         }
 
